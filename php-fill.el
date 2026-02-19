@@ -845,7 +845,7 @@ buffer."
 \\[php-fill-set-local-variables] on the current buffer.
 
 It's important to say that this customizable variable doesn't replace
-`fill-column'. `fill-column' it's still used as the value look up to
+`fill-column'.  `fill-column' it's still used as the value look up to
 fill any content.  The purpose of this variable is to ease the process
 of setting up a default `fill-column' for PHP files, through the use of
 the command `php-fill-set-local-variables' and a hook to a major mode
