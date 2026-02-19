@@ -1,0 +1,164 @@
+Name: Stitches two string being concatenated if placed at the beginning of the second one
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (php-fill-backward-delete))
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . '|amet, consectetur.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit|amet, consectetur.';
+=-=-=
+
+Name: Won't stitch two concatenated string literals if they don't meet the requirements
+=-=
+$stringVar = 'Lorem ipsum dolor sit'
+    . '|amet, consectetur.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit'
+    . |amet, consectetur.';
+=-=-=
+
+Name: Stitches two Phpdoc block's lines together.
+=-=
+/**
+ * @param string $short    Quite long
+ *                         |description
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite long|description
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: Stitches two commented lines together whit '//' prefix
+=-=
+// Lorem ipsum dolor sit amet
+// |consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+// Lorem ipsum dolor sit amet|consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Stitches two commented lines together whit '#' prefix
+=-=
+# Lorem ipsum dolor sit amet
+# |consectetur adipiscing elit.  Fusce
+# vel luctus tellus.
+=-=
+# Lorem ipsum dolor sit amet|consectetur adipiscing elit.  Fusce
+# vel luctus tellus.
+=-=-=
+
+Name: Diferent types of prefix won't be stitched together
+=-=
+# Lorem ipsum dolor sit amet
+// |consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+# Lorem ipsum dolor sit amet
+//|consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Previus line must also be a comment line
+=-=
+$stringVar = "Some other line";
+// |consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+$stringVar = "Some other line";
+//|consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Backward delete must be done on the beginning of the first word
+=-=
+// Lorem ipsum dolor sit amet
+//| consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+// Lorem ipsum dolor sit amet
+/| consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Backward delete must be done on the beginning of the first word on Phpdoc blocks paragraphs
+=-=
+/**
+ * @param string $short    Quite long
+ *          |               description
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite long
+ *         |               description
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: After stitching two strings, c-electric-backspace is called interactively
+Code: (lambda ()
+       (php-mode)
+       (let ((current-prefix-arg '(4)))
+        (call-interactively 'php-fill-backward-delete)))
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . '|amet, consectetur adipiscing.';
+=-=
+$stringVar = 'Lorem ipsum dolor |amet, consectetur adipiscing.';
+=-=-=
+
+Name: After stitching two comment lines, c-electric-backspace is called interactively
+=-=
+// Lorem ipsum dolor sit amet
+// |consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+// Lorem ipsum dolor sit a|consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Doesn't work if there is an active region
+Code: (lambda ()
+       (php-mode)
+       (push-mark (point) nil t)
+       (goto-char (- (point) 4))
+       (activate-mark)
+       (php-fill-backward-delete))
+=-=
+/**
+ * @param string $short    Quite long
+ *                         desc|ription
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite long
+ *                         |ription
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: Doesn't work if there is an active region inside a string literal
+=-=
+$stringVar = 'Lorem ipsum dolor sit '\n    . 'ame|t, consectetur.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '\n    . |t, consectetur.';
+=-=-=

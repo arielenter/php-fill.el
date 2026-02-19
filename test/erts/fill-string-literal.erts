@@ -1,0 +1,59 @@
+Name: Unfill and fill back string according to current fill-column
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (php-fill-string-literal))
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, '
+    . 'consectetur adipiscing elit. Fusce vel '
+    . 'luctus tellus, n|on varius ante. Nam et '
+    . 'arcu augue.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, n|on varius ante. Nam '
+    . 'et arcu augue.';
+=-=-=
+
+Name: Works if used out side but on the same line of any part of its parts
+=-=
+$stri|ngVar = 'Lorem ipsum dolor sit amet, '
+    . 'consectetur adipiscing elit. Fusce vel '
+    . 'luctus tellus, non varius ante. Nam et '
+    . 'arcu augue.';
+=-=
+$stri|ngVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante. Nam '
+    . 'et arcu augue.';
+=-=-=
+
+Name: Won't act on code that is inside of another string literal.
+=-=
+$string = "
+    $stringVar = 'Lo|rem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante.';
+";
+=-=-=
+
+Name: Refilling will end up readjust the lines when a sufficiently changes require it
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (insert "lorem ")
+       (php-fill-string-literal))
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur |adipiscing '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante. Nam '
+    . 'et arcu augue.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur lorem |'
+    . 'adipiscing elit. Fusce vel '
+    . 'luctus tellus, non varius '
+    . 'ante. Nam et arcu augue.';
+=-=-=

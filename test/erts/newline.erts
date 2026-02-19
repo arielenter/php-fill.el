@@ -1,0 +1,44 @@
+Name: Splits a string literal into two at point
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (php-fill-newline))
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur |adipiscing elit. Fusce vel luctus tellus, non varius ante.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur '
+    . 'adipiscing elit. Fusce vel luctus tellus, non varius ante.';
+=-=-=
+
+Name: Splits a Phpdoc block's paragraph into two
+=-=
+/**
+ * Lorem ipsum dolor sit amet, consectetur adipiscing elit.| Fusce vel luctus tellus, non varius ante.
+ */
+=-=
+/**
+ * Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ *
+ *| Fusce vel luctus tellus, non varius ante.
+ */
+=-=-=
+
+Name: Adds an empty line if called at the end of a Phpdoc block's paragraph
+=-=
+/**
+ * Lorem ipsum dolor sit amet, consectetur adipiscing elit.|
+ */
+=-=
+/**
+ * Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ *|
+ */
+=-=-=
+
+Name: Adds an empty new string concatenation string
+=-=
+$stringVar = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.|";
+=-=
+$stringVar = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    . "|";
+=-=-=

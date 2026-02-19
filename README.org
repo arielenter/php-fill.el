@@ -1,0 +1,50 @@
+* php-fill.el
+
+Additional fill commands for PHP code editing.
+
+** Fills string literals by breaking them into smaller ones.
+
+[[images/string-literal.gif]]
+
+** Conditionally use ‘NOSQUEEZ’ on c and c++ style comments.
+
+[[images/nosqueez.gif]]
+
+** Use “<return>” to break or add a new line to string literals and comments.
+
+[[image/return.gif]]
+
+** Use “<backspace>” or “<delete>” at the end and at the beginning to join them.
+
+[[image/backspace-and-del.gif]]
+
+** Minor mode Php-Refill.
+
+[[image/refill.gif]]
+
+** Added it to your init.el
+
+We recommend using this package with a major mode for PHP, like the ones supply by packages like [[https://elpa.nongnu.org/nongnu/php-mode.html][php-mode]] and [[https://elpa.gnu.org/packages/phps-mode.html][phps-mode]], to get the indentation right and for the hook.
+
+The following example uses ‘php-mode’, but if a different major mode were to be used, just change ‘php-mode’ with something else like ‘phps-mode’ instead.
+
+While in the process of being accepted in either [[https://elpa.gnu.org/][elpa.gnu.org]] or [[https://elpa.nongnu.org/][elpa.nongnu.org]], please download ‘php-fill.el’ and add it by using its holding location, shown here as "~/.emacs.d/lisp/" as an example.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
+  (use-package php-fill
+    :load-path "~/.emacs.d/lisp/"
+    ;; :custom
+    ;; (php-fill-fill-column 120) ;; Default is 80.
+    ;; (php-fill-sentence-end-double-space t) ;; Default is nil.
+    ;; (php-fill-nosqueeze-c-comments nil) ;; Default is t
+    ;; (php-fill-nosqueeze-c++-comments t) ;; Default is nil
+    :hook
+    (php-mode . php-fill-set-local-variables)
+    :bind
+    (:map php-mode-map
+  	("M-q" . php-fill-paragraph)
+  	("<return>" . php-fill-newline)
+  	("<backspace>" . php-fill-backward-delete)
+  	("<delete>" . php-fill-delete-forward)))
+#+END_SRC

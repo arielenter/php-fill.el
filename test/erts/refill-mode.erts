@@ -1,0 +1,178 @@
+Name: Refills a c style comment when adding text
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (custom-reevaluate-setting 'php-fill-nosqueeze-c-comments)
+       (custom-reevaluate-setting 'php-fill-nosqueeze-c-comments)
+       (php-fill-refill-mode)
+       (ert-simulate-command '(self-insert-command 1 ? ))
+       (insert "descriptio")
+       (ert-simulate-command '(self-insert-command 1 ?n)))
+=-=
+/**
+ * @param string $short    Quite long|
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite long
+ *                         description|
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: Refills a c++ style comment when addion text
+=-=
+// Lorem ipsum dolor sit amet,|
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+// Lorem ipsum dolor sit amet,
+// description| consectetur adipiscing
+// elit.  Fusce vel luctus tellus.
+=-=-=
+
+Name: Refills a string when addion text
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur| adipiscing '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante. Nam '
+    . 'et arcu augue.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur description| '
+    . 'adipiscing elit. Fusce vel '
+    . 'luctus tellus, non varius '
+    . 'ante. Nam et arcu augue.';
+=-=-=
+
+Name: Refills a c style comment when deleting text
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (custom-reevaluate-setting 'php-fill-nosqueeze-c-comments)
+       (custom-reevaluate-setting 'php-fill-nosqueeze-c-comments)
+       (php-fill-refill-mode)
+       (ert-simulate-command '(c-electric-backspace 7)))
+=-=
+/**
+ * @param string $short    Quite long
+ *                         description|
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite long
+ *                         desc second
+ *                         line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: Refills a c++ style comment when deleting text
+=-=
+// Lorem ipsum dolor sit amet,
+// description| consectetur adipiscing
+// elit.  Fusce vel luctus tellus.
+=-=
+// Lorem ipsum dolor sit amet, desc|
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Refills a string when deleting text
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur description| '
+    . 'adipis elit. Fusce vel luctus '
+    . 'tellus, non varius ante. Nam '
+    . 'et arcu augue.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur desc| adipis '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante. Nam '
+    . 'et arcu augue.';
+=-=-=
+
+Name: Refills only one line up from point
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante. Na '
+    . 'auguell.| Nulla ac dui auctor, '
+    . 'bibendum dui vitae';
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante. Na a| '
+    . 'Nulla ac dui auctor, bibendum '
+    . 'dui vitae';
+=-=-=
+
+Name: Refill is not performed after changes made by command comment-or-uncomment-region
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (php-fill-refill-mode)
+       (let ((begx (point-min)) (endx (point-max)))
+         (ert-simulate-command (list 'comment-region begx endx))
+	 (ert-simulate-command (list 'uncomment-region begx endx))
+         (ert-simulate-command (list 'comment-or-uncomment-region begx endx))
+         (ert-simulate-command (list 'comment-or-uncomment-region begx endx))))
+=-=
+$stringVar = 'Lo|rem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante.';
+=-=-=
+
+Name: Refill is not performed if php-fill-newline breaks a string literal in two
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (php-fill-refill-mode)
+       (ert-simulate-command '(php-fill-newline)))
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur |adipiscing elit. Fusce vel luctus tellus, non varius ante.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur '
+    . 'adipiscing elit. Fusce vel luctus tellus, non varius ante.';
+=-=-=
+
+Name: Refill is performed when php-fill-newline breaks a Phpdoc block's paragraphs in two
+=-=
+/**
+ * Lorem ipsum dolor sit amet,
+ * consectetur adipiscing elit. Fusce
+ * vel luctus tellus, non varius
+ * ante. Nam et arcu augue. Nulla ac
+ * dui auctor, bibendum dui vitae,
+ * suscipit sapien.| In porta ante id
+ * metus placerat viverra. Aliquam a
+ * massa eu ante tempus semper. Nullam
+ * ac eros gravida, viverra ipsum eu,
+ * egestas dolor.
+ */
+=-=
+/**
+ * Lorem ipsum dolor sit amet,
+ * consectetur adipiscing elit. Fusce
+ * vel luctus tellus, non varius
+ * ante. Nam et arcu augue. Nulla ac
+ * dui auctor, bibendum dui vitae,
+ * suscipit sapien.
+ *
+ * In porta ante id metus placerat
+ * viverra. Aliquam a massa eu ante
+ * tempus semper. Nullam ac eros
+ * gravida, viverra ipsum eu, egestas
+ * dolor.
+ */
+=-=-=

@@ -1,0 +1,96 @@
+Name: Stitch string parts into one, while point is within one of its parts
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (php-fill-stitch-string-parts-together))
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing '
+    . 'elit. Fu|sce vel luctus '
+    . 'tellus, non varius ante.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu|sce vel luctus tellus, non varius ante.';
+=-=-=
+
+Name: Stitch string parts into one, even if not within one, but within a line containing one
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+  |  . 'amet, consectetur adipiscing '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit |amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante.';
+=-=-=
+
+Name: Quote type double can be use as well
+=-=
+$stringVar = "Lorem ipsum dolor sit "
+    . "amet, consectetur adipiscing "
+    . "elit. Fusce vel luctus "
+    . "tellus, n|on varius ante.";
+=-=
+$stringVar = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, n|on varius ante.";
+=-=-=
+
+Name: Two string literals are considered part of the same string only if the previus string literal ends on a space
+=-=
+$stringVar = 'Lor|em ipsum dolor sit '
+    . 'amet, consectetur adipiscing'
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante.';
+=-=
+$stringVar = 'Lor|em ipsum dolor sit amet, consectetur adipiscing'
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante.';
+=-=-=
+
+Name: Can't be fool into assuming two lines can be concatenated
+=-=
+    . "tellus, non varius ante "
+$stringVar = "Lo|rem ipsum dolor sit "
+    . "amet, consectetur adipiscing "
+=-=
+    . "tellus, non varius ante "
+$stringVar = "Lo|rem ipsum dolor sit amet, consectetur adipiscing "
+=-=-=
+
+Name: Two string literals are considered part of the same if they share the same quote type
+=-=
+$stringVar = "Lor|em ipsum dolor sit "
+    . "amet, consectetur adipiscing "
+    . 'elit. Fusce vel luctus '
+    . "tellus, non varius ante.";
+=-=
+$stringVar = "Lor|em ipsum dolor sit amet, consectetur adipiscing "
+    . 'elit. Fusce vel luctus '
+    . "tellus, non varius ante.";
+=-=-=
+
+Name: Strings being concatenated are only stitch together when the subsequent concatanation string cover the entire line.
+=-=
+$stringVar = 'Lor|em ipsum dolor sit '
+    . 'amet, consectetur adipiscing '
+    . 'elit. Fusce ' . 'vel luctus '
+    . 'tellus, non varius ante.';
+=-=
+$stringVar = 'Lor|em ipsum dolor sit amet, consectetur adipiscing '
+    . 'elit. Fusce ' . 'vel luctus '
+    . 'tellus, non varius ante.';
+=-=-=
+
+Name: If a non nil value is given argument ONLY-ONE-LINE-UP only one line up will be stitch together but every thing else is.
+Code: (lambda ()
+       (php-mode)
+       (php-fill-stitch-string-parts-together t))
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, n|on varius ante. Nam '
+    . 'et arcu augue. Nulla ac dui '
+    . 'auctor, bibendum dui vitae';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing '
+    . 'elit. Fusce vel luctus tellus, n|on varius ante. Nam et arcu augue. Nulla ac dui auctor, bibendum dui vitae';
+=-=-=

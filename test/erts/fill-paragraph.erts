@@ -1,0 +1,99 @@
+Name: Uses php-fill-c-paragraph to fill c++ style comments.
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (custom-reevaluate-setting 'php-fill-nosqueeze-c++-comments)
+       (custom-reevaluate-setting 'php-fill-nosqueeze-c-comments)
+       (php-fill-paragraph))
+=-=
+// Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
+=-=
+// Lo|rem ipsum dolor sit amet,
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Uses php-fill-c-paragraph to fill c style comments.
+=-=
+/**
+ * @param string $short    Quite l|ong description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite l|ong
+ *                         description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: Uses php-fill-string-literal to fill string literals.
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu|sce vel luctus tellus, non varius ante.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing '
+    . 'elit. Fu|sce vel luctus '
+    . 'tellus, non varius ante.';
+=-=-=
+
+Name: A prefix justify c++ style comments.
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (customize-set-variable 'php-fill-nosqueeze-c++-comments t)
+       (customize-set-variable 'php-fill-nosqueeze-c-comments t)
+       (let ((current-prefix-arg '(4)))
+        (call-interactively 'php-fill-paragraph)))
+=-=
+// Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
+=-=
+// Lo|rem   ipsum   dolor   sit   amet,
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: A prefix justify c style comments.
+=-=
+/**
+ * @param string $short    Quite l|ong description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param  string  $short  Quite  l|ong
+ *                         description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: Optional argument ONLY-ONE-LINE-UP will be passed down to php-fill-string-literal
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (php-fill-paragraph t))
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing in porta ante id metus placerat viverra '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, n|on varius ante, Nam Nullam ac eros gravida,'
+    . 'et arcu augue. Nulla ac dui '
+    . 'auctor, bibendum dui vitae';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing in porta ante id metus placerat viverra '
+    . 'elit. Fusce vel luctus '
+    . 'tellus, non varius ante, Nam '
+    . 'Nullam ac eros gravida,'
+    . 'et arcu augue. Nulla ac dui '
+    . 'auctor, bibendum dui vitae';
+=-=-=

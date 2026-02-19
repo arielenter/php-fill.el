@@ -1,0 +1,100 @@
+Name: Doesn't squeez spaces in c++ style comments if variable php-fill-nosqueeze-c++-comments is not nil
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (customize-set-variable 'php-fill-nosqueeze-c++-comments t)
+       (custom-reevaluate-setting 'php-fill-nosqueeze-c-comments)
+       (php-fill-c-fill-paragraph))
+=-=
+// Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
+=-=
+// Lo|rem    ipsum   dolor  sit amet,
+// consectetur    adipiscing     elit.
+// Fusce  vel luctus   tellus.
+=-=-=
+
+Name: Doesn't squeez spaces in c style comments if variable php-fill-nosqueeze-c-comments is not nil, which is the defualt value
+=-=
+/**
+ * @param string $short    Quite l|ong description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite l|ong
+ *                         description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: Squeezes spaces in c++ style comments if variable php-fill-nosqueeze-c++-comments is null, which is the default value
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (customize-set-variable 'php-fill-nosqueeze-c-comments nil)
+       (custom-reevaluate-setting 'php-fill-nosqueeze-c++-comments)
+       (php-fill-c-fill-paragraph))
+=-=
+// Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
+=-=
+// Lo|rem ipsum dolor sit amet,
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Squeezes spaces in c style comments if variable php-fill-nosqueeze-c-comments is nil
+=-=
+/**
+ * @param string $short    Quite l|ong description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short Quite l|ong
+ *                         description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: If the command is prefixed then the value of php-fill-nosqueeze-c++-comments will be ignored and the c++ style comment will be justified
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (customize-set-variable 'php-fill-nosqueeze-c++-comments t)
+       (customize-set-variable 'php-fill-nosqueeze-c-comments t)
+       (let ((current-prefix-arg '(4)))
+        (call-interactively 'php-fill-c-fill-paragraph)))
+=-=
+// Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
+=-=
+// Lo|rem   ipsum   dolor   sit   amet,
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: If the command is prefixed then the value of php-fill-nosqueeze-c-comments will be ignored and the c style comment will be justified
+=-=
+/**
+ * @param string $short    Quite l|ong description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param  string  $short  Quite  l|ong
+ *                         description,
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=

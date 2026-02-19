@@ -1,0 +1,111 @@
+Name: Stitches two string being concatenated if placed at the end of the first one before delete-forward-char is called
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (call-interactively 'php-fill-delete-forward))
+=-=
+$stringVar = 'Lorem ipsum dolor sit |'
+    . 'amet, consectetur.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit |met, consectetur.';
+=-=-=
+
+Name: Stitches two string being concatenated if placed at the beginning of the last space
+=-=
+$stringVar = 'Lorem ipsum dolor sit| '
+    . 'amet, consectetur.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit|amet, consectetur.';
+=-=-=
+
+Name: Won't stitch two concatenated string literals if they don't meet the requirements
+=-=
+$stringVar = 'Lorem ipsum dolor sit|'
+    . 'amet, consectetur.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit|
+    . 'amet, consectetur.';
+=-=-=
+
+Name: Stitches two Phpdoc block's lines together.
+=-=
+/**
+ * @param string $short    Quite long|
+ *                         description
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite long|description
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=
+
+Name: Stitches two commented lines together whit '//' prefix
+=-=
+// Lorem ipsum dolor sit amet|
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+// Lorem ipsum dolor sit amet|consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Stitches two commented lines together whit '#' prefix
+=-=
+# Lorem ipsum dolor sit amet|
+# consectetur adipiscing elit.  Fusce
+# vel luctus tellus.
+=-=
+# Lorem ipsum dolor sit amet|consectetur adipiscing elit.  Fusce
+# vel luctus tellus.
+=-=-=
+
+Name: Diferent types of prefix won't be stitched together
+=-=
+# Lorem ipsum dolor sit amet|
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+# Lorem ipsum dolor sit amet|// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Succeeding line must also be a comment line
+=-=
+$stringVar = "Some other line";|
+// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=
+$stringVar = "Some other line";|// consectetur adipiscing elit.  Fusce
+// vel luctus tellus.
+=-=-=
+
+Name: Won't work on an active region
+Code: (lambda ()
+       (php-mode)
+       (push-mark (point) t t)
+       (goto-char (+ (point) 4))
+       (activate-mark)
+       (php-fill-delete-forward))
+=-=
+/**
+ * @param string $short    Quite |long
+ *                         description
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=
+/**
+ * @param string $short    Quite |
+ *                         description
+ *                         second line
+ * @param array  $longName First line,
+ *                         second line
+ */
+=-=-=

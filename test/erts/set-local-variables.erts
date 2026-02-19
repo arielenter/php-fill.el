@@ -1,0 +1,17 @@
+Name: Sets local values for fill-column and sentence-end-double-space using variables php-fill-fill-column and php-fill-sentence-end-double-space respectably
+Code: (lambda ()
+        (custom-reevaluate-setting 'php-fill-fill-column)
+        (custom-reevaluate-setting 'php-fill-sentence-end-double-space)
+        (php-fill-set-local-variables)
+        (should (equal fill-column 80))
+        (should (equal sentence-end-double-space nil)))
+=-=-=
+
+Name: Values other than the default ones might be used on variables php-fill-fill-column and php-fill-sentence-end-double-space respectably
+Code: (lambda ()
+        (customize-set-variable php-fill-fill-column 120)
+        (customize-set-variable php-fill-sentence-end-double-space t)
+        (php-fill-set-local-variables)
+        (should (equal fill-column 120))
+        (should (equal sentence-end-double-space t)))
+=-=-=

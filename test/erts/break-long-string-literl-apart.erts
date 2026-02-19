@@ -1,0 +1,268 @@
+WARNING Some lines might appear longer than what should be posible because of the point-char
+
+Name: Long string literal with point inside.
+Point-Char: |
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 80)
+       (php-fill-break-long-string-literal-apart))
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante. Nam et arcu augue. Nulla ac dui auctor, bibendum dui vitae, susc|ipit sapien. In porta ante id metus placerat viverra. Aliquam a massa eu ante tempus semper. Nullam ac eros gravida, viverra ipsum eu, egestas dolor.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce '
+    . 'vel luctus tellus, non varius ante. Nam et arcu augue. Nulla ac dui '
+    . 'auctor, bibendum dui vitae, susc|ipit sapien. In porta ante id metus '
+    . 'placerat viverra. Aliquam a massa eu ante tempus semper. Nullam ac eros '
+    . 'gravida, viverra ipsum eu, egestas dolor.';
+=-=-=
+
+Name: Long string literal with point outside but on the same line.
+=-=
+$stri|ngVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante. Nam et arcu augue. Nulla ac dui auctor, bibendum dui vitae, suscipit sapien. In porta ante id metus placerat viverra. Aliquam a massa eu ante tempus semper. Nullam ac eros gravida, viverra ipsum eu, egestas dolor.';
+=-=
+$stri|ngVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce '
+    . 'vel luctus tellus, non varius ante. Nam et arcu augue. Nulla ac dui '
+    . 'auctor, bibendum dui vitae, suscipit sapien. In porta ante id metus '
+    . 'placerat viverra. Aliquam a massa eu ante tempus semper. Nullam ac eros '
+    . 'gravida, viverra ipsum eu, egestas dolor.';
+=-=-=
+
+Name: String must be long enought
+=-=
+$stringVar = 'Lorem ip|sum dolor sit amet, consectetur adipiscing elit. Fusceas';
+=-=-=
+
+Name: Even if only statement ender semicolon passes, it will be broken apart.
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu|sceass';
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+    . 'Fu|sceass';
+=-=-=
+
+Name: Even if the coma that separates values on an array passes.
+=-=
+$arrayVar = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel lu|ctuas',
+    4
+];
+=-=
+$arrayVar = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel '
+        . 'lu|ctuas',
+    4
+];
+=-=-=
+
+Name: Even if only the string literal delimiter passes.
+=-=
+$arrayVar = [
+    'example' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit fu|sces'
+];
+=-=
+$arrayVar = [
+    'example' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit '
+        . 'fu|sces'
+];
+=-=-=
+
+Name: The string literal must exist at the end of the line
+=-=
+$stringVar = 'Lorem i|psum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus.' . $stringTwo;
+=-=-=
+
+Name: Long string literal with quote type double as its delimiters.
+=-=
+$stringVar = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante. Nam et arcu augue. Nulla ac dui auctor, bibendum dui vitae, susc|ipit sapien. In porta ante id metus placerat viverra. Aliquam a massa eu ante tempus semper. Nullam ac eros gravida, viverra ipsum eu, egestas dolor.";
+=-=
+$stringVar = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce "
+    . "vel luctus tellus, non varius ante. Nam et arcu augue. Nulla ac dui "
+    . "auctor, bibendum dui vitae, susc|ipit sapien. In porta ante id metus "
+    . "placerat viverra. Aliquam a massa eu ante tempus semper. Nullam ac eros "
+    . "gravida, viverra ipsum eu, egestas dolor.";
+=-=-=
+
+Name: right-margin text property influences on the fill
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 80)
+       (set-right-margin (point-min) (point-max) 30)
+       (php-fill-break-long-string-literal-apart)
+       (set-text-properties (point-min) (point-max) nil))
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante. Nam et arcu augue. Nulla ac dui auctor, bibendum dui vitae, susc|ipit sapien. In porta ante id metus placerat viverra. Aliquam a massa eu ante tempus semper. Nullam ac eros gravida, viverra ipsum eu, egestas dolor.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, '
+    . 'consectetur adipiscing elit. Fusce vel '
+    . 'luctus tellus, non varius ante. Nam et '
+    . 'arcu augue. Nulla ac dui auctor, bibendum '
+    . 'dui vitae, susc|ipit sapien. In porta ante '
+    . 'id metus placerat viverra. Aliquam a '
+    . 'massa eu ante tempus semper. Nullam ac '
+    . 'eros gravida, viverra ipsum eu, egestas '
+    . 'dolor.';
+=-=-=
+
+Name: Fill column can be bigger
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 120)
+       (php-fill-break-long-string-literal-apart))
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante. Nam et arcu augue. Nulla ac dui auctor, bi|bendum dui vitae, suscipit sapien. In porta ante id metus placerat viverra. Aliquam a massa eu ante tempus semper. Nullam ac eross gravida, viverra ipsum eu, egestas dolor.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante. Nam '
+    . 'et arcu augue. Nulla ac dui auctor, bi|bendum dui vitae, suscipit sapien. In porta ante id metus placerat '
+    . 'viverra. Aliquam a massa eu ante tempus semper. Nullam ac eross gravida, viverra ipsum eu, egestas dolor.';
+=-=-=
+
+Name: Fill column can be smaller
+Code: (lambda ()
+       (php-mode)
+       (setq-local fill-column 38)
+       (php-fill-break-long-string-literal-apart))
+=-=
+$stringVar = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu|sce vel luctus tellus, non varius ante.';
+=-=
+$stringVar = 'Lorem ipsum dolor sit '
+    . 'amet, consectetur adipiscing '
+    . 'elit. Fu|sce vel luctus '
+    . 'tellus, non varius ante.';
+=-=-=
+
+Name: Spaces are neither trim nor squeezed.
+=-=
+$stringVar = "    Lorem   ipsum     dolor   sit    amet, consectetur     ad|ipiscing   elit  .    ";
+=-=
+$stringVar = "    Lorem   ipsum     "
+    . "dolor   sit    amet, "
+    . "consectetur     ad|ipiscing   "
+    . "elit  .    ";
+=-=-=
+
+Name: String must be breakable
+=-=
+$stringVar = 'Loremipsumdolorsitametconsec   ';
+=-=-=
+
+Name: Handdle scaped quotes just fine (pairs of a backslash follow by a character)
+=-=
+$stringVar = "Lorem ipsum \"dolor sit amet\\\", consectetur \"adi|piscing\" elit. Fusce vel luctus tellus.";
+=-=
+$stringVar = "Lorem ipsum \"dolor "
+    . "sit amet\\\", consectetur "
+    . "\"adi|piscing\" elit. Fusce "
+    . "vel luctus tellus.";
+=-=-=
+
+Name: Can't be fool with a fake scaped quote (double backslashes cancel each other)
+=-=
+$stringVar = "Lore|m ipsum \\"dolor sit amet, \\\\\\"consectetur adipiscing elit. Fusce vel luctus tellus";
+=-=-=
+
+Name: Long words are not cut in the middle.
+=-=
+class SomeClass
+{
+    function someMethod ()
+    {
+        if (true)
+        {
+            $array = [
+                'Loremipsumdolorsitamet, et con|secteturadipiscingelit. Fuscevelluctustellus, non varius ante.'
+            ];
+        }
+    }
+}
+=-=
+class SomeClass
+{
+    function someMethod ()
+    {
+        if (true)
+        {
+            $array = [
+                'Loremipsumdolorsitamet, '
+                    . 'et '
+                    . 'con|secteturadipiscingelit. '
+                    . 'Fuscevelluctustellus, '
+                    . 'non varius '
+                    . 'ante.'
+            ];
+        }
+    }
+}
+=-=-=
+
+Name: If string literal beginning passes fill-column, text will be broken as soon as posible.
+=-=
+class SomeClass
+{
+    function someMethod ()
+    {
+        while (true)
+        {
+            if (true)
+            {
+                $array = [
+                    [
+                        [
+                            [
+                                'exa|mple_key_long' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel luctus tellus, non varius ante.'
+                            ]
+                        ]
+                    ]
+                ];
+                break;
+            }
+        }
+    }
+}
+=-=
+class SomeClass
+{
+    function someMethod ()
+    {
+        while (true)
+        {
+            if (true)
+            {
+                $array = [
+                    [
+                        [
+                            [
+                                'exa|mple_key_long' => 'Lorem '
+                                    . 'ipsum '
+                                    . 'dolor '
+                                    . 'sit '
+                                    . 'amet, '
+                                    . 'consectetur '
+                                    . 'adipiscing '
+                                    . 'elit. '
+                                    . 'Fusce '
+                                    . 'vel '
+                                    . 'luctus '
+                                    . 'tellus, '
+                                    . 'non '
+                                    . 'varius '
+                                    . 'ante.'
+                            ]
+                        ]
+                    ]
+                ];
+                break;
+            }
+        }
+    }
+}
+=-=-=
+
+Name: Most anything is cosidered a word.
+Point-Char: ¡
+=-=
+$string¡Var = "\|@á#~½¬ {[]é}\?=) \|@í#~½¬ {[]ó}\?=) (/&ú%$·!ª  (/&ñ%$·!ª";
+=-=
+$string¡Var = "\|@á#~½¬ {[]é}\?=) "
+    . "\|@í#~½¬ {[]ó}\?=) (/&ú%$·!ª  "
+    . "(/&ñ%$·!ª";
+=-=-=
