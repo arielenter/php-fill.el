@@ -10,11 +10,11 @@ Additional fill commands for PHP code editing.
 
 [[images/nosqueez.gif]]
 
-** Use “<return>” to break or add a new line to string literals and comments.
+** Use “<return>” to break or add a new line to string literals and doc blocks.
 
 [[images/return.gif]]
 
-** Use “<backspace>” or “<delete>” at the end and at the beginning to join them.
+** Use “<backspace>” or “<delete>” at the beginning and at the end to join them.
 
 [[images/backspace-and-del.gif]]
 
