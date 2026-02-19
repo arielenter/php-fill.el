@@ -44,7 +44,6 @@
 ;;   (php-mode . php-fill-set-local-variables)
 ;;   (php-mode . php-fill-refill-mode)
 ;;   (php-mode . display-fill-column-indicator-mode)
-;;   (php-mode . display-line-numbers-mode)
 ;;   :bind
 ;;   (:map php-mode-map
 ;;   	("M-q" . php-fill-paragraph)
