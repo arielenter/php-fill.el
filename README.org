@@ -22,7 +22,7 @@ Additional fill commands for PHP code editing.
 
 [[images/refill.gif]]
 
-** Added it to your init.el
+** Add it to your init.el
 
 We recommend using this package with a major mode for PHP, like the ones supply by packages like [[https://elpa.nongnu.org/nongnu/php-mode.html][php-mode]] and [[https://elpa.gnu.org/packages/phps-mode.html][phps-mode]], to get the indentation right and for the hook.
 
