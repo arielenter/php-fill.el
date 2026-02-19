@@ -41,6 +41,12 @@ While in the process of being accepted in either [[https://elpa.gnu.org/][elpa.g
     ;; (php-fill-nosqueeze-c++-comments t) ;; Default is nil
     :hook
     (php-mode . php-fill-set-local-variables)
+    ;; You migth omit the follwong if you want to fill literals manually
+    ;; with ‘M-q’.
+    (php-mode . php-fill-refill-mode)
+    ;; The following is recommended if it hasn't been done before.
+    (php-mode . display-fill-column-indicator-mode)
+    (php-mode . display-line-numbers-mode)
     :bind
     (:map php-mode-map
   	("M-q" . php-fill-paragraph)
