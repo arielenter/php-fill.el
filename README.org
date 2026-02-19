@@ -12,15 +12,15 @@ Additional fill commands for PHP code editing.
 
 ** Use “<return>” to break or add a new line to string literals and comments.
 
-[[image/return.gif]]
+[[images/return.gif]]
 
 ** Use “<backspace>” or “<delete>” at the end and at the beginning to join them.
 
-[[image/backspace-and-del.gif]]
+[[images/backspace-and-del.gif]]
 
 ** Minor mode Php-Refill.
 
-[[image/refill.gif]]
+[[images/refill.gif]]
 
 ** Added it to your init.el
 
