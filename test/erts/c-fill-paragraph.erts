@@ -3,6 +3,7 @@ Point-Char: |
 Code: (lambda ()
        (php-mode)
        (setq-local fill-column 38)
+       (setq-local sentence-end-double-space nil)
        (customize-set-variable 'php-fill-nosqueeze-c++-comments t)
        (custom-reevaluate-setting 'php-fill-nosqueeze-c-comments)
        (php-fill-c-fill-paragraph))
@@ -36,6 +37,7 @@ Name: Squeezes spaces in c++ style comments if variable php-fill-nosqueeze-c++-c
 Code: (lambda ()
        (php-mode)
        (setq-local fill-column 38)
+       (setq-local sentence-end-double-space nil)
        (customize-set-variable 'php-fill-nosqueeze-c-comments nil)
        (custom-reevaluate-setting 'php-fill-nosqueeze-c++-comments)
        (php-fill-c-fill-paragraph))
@@ -43,7 +45,7 @@ Code: (lambda ()
 // Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
 =-=
 // Lo|rem ipsum dolor sit amet,
-// consectetur adipiscing elit.  Fusce
+// consectetur adipiscing elit. Fusce
 // vel luctus tellus.
 =-=-=
 
@@ -69,6 +71,7 @@ Name: If the command is prefixed then the value of php-fill-nosqueeze-c++-commen
 Code: (lambda ()
        (php-mode)
        (setq-local fill-column 38)
+       (setq-local sentence-end-double-space nil)
        (customize-set-variable 'php-fill-nosqueeze-c++-comments t)
        (customize-set-variable 'php-fill-nosqueeze-c-comments t)
        (let ((current-prefix-arg '(4)))
@@ -77,7 +80,7 @@ Code: (lambda ()
 // Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
 =-=
 // Lo|rem   ipsum   dolor   sit   amet,
-// consectetur adipiscing elit.  Fusce
+// consectetur adipiscing  elit. Fusce
 // vel luctus tellus.
 =-=-=
 

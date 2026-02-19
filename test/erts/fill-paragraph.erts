@@ -3,6 +3,7 @@ Point-Char: |
 Code: (lambda ()
        (php-mode)
        (setq-local fill-column 38)
+       (setq-local sentence-end-double-space nil)
        (custom-reevaluate-setting 'php-fill-nosqueeze-c++-comments)
        (custom-reevaluate-setting 'php-fill-nosqueeze-c-comments)
        (php-fill-paragraph))
@@ -10,7 +11,7 @@ Code: (lambda ()
 // Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
 =-=
 // Lo|rem ipsum dolor sit amet,
-// consectetur adipiscing elit.  Fusce
+// consectetur adipiscing elit. Fusce
 // vel luctus tellus.
 =-=-=
 
@@ -46,6 +47,7 @@ Name: A prefix justify c++ style comments.
 Code: (lambda ()
        (php-mode)
        (setq-local fill-column 38)
+       (setq-local sentence-end-double-space nil)
        (customize-set-variable 'php-fill-nosqueeze-c++-comments t)
        (customize-set-variable 'php-fill-nosqueeze-c-comments t)
        (let ((current-prefix-arg '(4)))
@@ -54,7 +56,7 @@ Code: (lambda ()
 // Lo|rem    ipsum   dolor  sit amet,  consectetur    adipiscing     elit.   Fusce  vel luctus   tellus.
 =-=
 // Lo|rem   ipsum   dolor   sit   amet,
-// consectetur adipiscing elit.  Fusce
+// consectetur adipiscing  elit. Fusce
 // vel luctus tellus.
 =-=-=
 
@@ -80,6 +82,7 @@ Name: Optional argument ONLY-ONE-LINE-UP will be passed down to php-fill-string-
 Code: (lambda ()
        (php-mode)
        (setq-local fill-column 38)
+       (setq-local sentence-end-double-space nil)
        (php-fill-paragraph t))
 =-=
 $stringVar = 'Lorem ipsum dolor sit '
