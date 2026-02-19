@@ -39,18 +39,23 @@ While in the process of being accepted in either [[https://elpa.gnu.org/][elpa.g
     ;; (php-fill-sentence-end-double-space t) ;; Default is nil.
     ;; (php-fill-nosqueeze-c-comments nil) ;; Default is t
     ;; (php-fill-nosqueeze-c++-comments t) ;; Default is nil
+    ;; Add commands that conflict with php-fill-refill-mode
+    ;; (php-fill-refill-black-list
+    ;;  (append '(some-command some-other-command)
+    ;; 	   php-fill-refill-black-list))
     :hook
     (php-mode . php-fill-set-local-variables)
     ;; You migth omit the follwong if you want to fill literals manually
     ;; with ‘M-q’.
     (php-mode . php-fill-refill-mode)
-    ;; The following is recommended if it hasn't been done before.
+    ;; The following is recommended unless you are already usign them.
     (php-mode . display-fill-column-indicator-mode)
     (php-mode . display-line-numbers-mode)
     :bind
     (:map php-mode-map
-  	("M-q" . php-fill-paragraph)
-  	("<return>" . php-fill-newline)
-  	("<backspace>" . php-fill-backward-delete)
-  	("<delete>" . php-fill-delete-forward)))
+    	("M-q" . php-fill-paragraph)
+    	("<return>" . php-fill-newline)
+    	("C-<return>" . newline) ;; Literal newline on string literals
+    	("<backspace>" . php-fill-backward-delete)
+    	("<delete>" . php-fill-delete-forward)))
 #+END_SRC

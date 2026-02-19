@@ -568,6 +568,19 @@ refill process more times that needed.
 Check function `php-fill-refill-after-change-function' for additional
 information.")
 
+(defcustom php-fill-refill-black-list
+  '(comment-or-uncomment-region comment-region uncomment-region)
+  "List of commands whose changes should not trigger a refill.
+
+An example are while commenting and un-commenting code, since filling
+said code while is commented will make it loose its format, which is
+more likely unwanted.
+
+Feel free to add any other command that you find problematic to trigger
+a refill."
+  :type '(repeat symbol)
+  :group 'php-fill)
+
 (defun php-fill-refill-after-change-function (_beg _end _len)
   "After-change function used by minor mode `php-fill-refill-mode'.
 
@@ -581,21 +594,22 @@ refill, otherwise undo won't be able to reverse back what the refill
 process did right before (since it would be redone right back), or other
 undesirable effects might arise.
 
-Another case is while commenting and un-commenting code, since filling
-said code will make it loose its format, which is inferred to be an
-undesirable behavior.
+A customizable list of commands (`php-fill-refill-black-list') exist to
+establish what command's changes should not trigger a refill.
 
 Function \\[php-fill-newline] is a special case, since we only want to
-suppress the refill process if it's used to break a string literal in
+suppress the refill process if it ends up breaking a string literal in
 two.  The reason is that, if the refill process were not suppressed and
 if a split were to be made right after a space, the user could get
 confused since it would appear as if nothing happened, since right after
 the string literals is broken, it will immediately be reattached back
-together.  For this reason, \\[php-fill-newline] would set variable
-`php-fill-refill-promise-to-doit' back no nil in this scenario."
+together by the refill process.  For this reason, \\[php-fill-newline]
+would set variable `php-fill-refill-promise-to-doit' back to nil only in
+the case that it ends up breaking a string literal.  This way we do not
+need to suppress it on its totality, which is what would happen if we
+were to added it to the `php-fill-refill-black-list' command list."
   (unless (or undo-in-progress
-	      (memq this-command '(comment-or-uncomment-region
-				   comment-region uncomment-region)))
+	      (memq this-command php-fill-refill-black-list))
     (setq php-fill-refill-promise-to-doit t)))
 
 (defun php-fill-refill-post-command-function ()
