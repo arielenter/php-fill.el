@@ -26,9 +26,38 @@
 ;; <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; Heavily base on fill-paragraph, refill-mode and c-fill-paragraph.
-;;
-;;
+;; Additional fill commands for PHP code editing.
+
+;; - Fills string literals by breaking them into smaller ones.
+;; - Conditionally use ‘NOSQUEEZ’ on c and c++ style comments.
+;; - Use “<return>” to break or add a new line to string literals and
+;;   doc blocks.
+;; - Use “<backspace>” or “<delete>” at the beginning and at the end to
+;;   join them.
+;; - Minor mode Php-Refill.
+
+;; Minimum suggested inclusion code with ‘php-mode’:
+
+;; (use-package php-fill
+;;   :hook
+;;   (php-mode . php-fill-set-local-variables)
+;;   (php-mode . php-fill-refill-mode)
+;;   (php-mode . display-fill-column-indicator-mode)
+;;   (php-mode . display-line-numbers-mode)
+;;   :bind
+;;   (:map php-mode-map
+;;   	("M-q" . php-fill-paragraph)
+;;   	("<return>" . php-fill-newline)
+;;   	("C-<return>" . newline)
+;;   	("<backspace>" . php-fill-backward-delete)
+;;   	("<delete>" . php-fill-delete-forward)))
+
+;;; News:
+;; Version 1.1.0
+
+;; - Customizable variable `php-fill-refill-black-list' added, so that
+;;   if the user finds a command that conflicts with
+;;   `php-fill-refill-mode' that command can be added by the user.
 
 ;;; Code:
 
