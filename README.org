@@ -34,6 +34,7 @@ While in the process of being accepted in either [[https://elpa.gnu.org/][elpa.g
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
   (use-package php-fill
     :load-path "~/.emacs.d/lisp/"
+    :requires 'php-mode
     ;; :custom
     ;; (php-fill-fill-column 120) ;; Default is 80.
     ;; (php-fill-sentence-end-double-space t) ;; Default is nil.

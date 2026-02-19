@@ -39,6 +39,7 @@
 ;; Minimum suggested inclusion code with ‘php-mode’:
 
 ;; (use-package php-fill
+;;   :requires 'php-mode
 ;;   :hook
 ;;   (php-mode . php-fill-set-local-variables)
 ;;   (php-mode . php-fill-refill-mode)
