@@ -63,7 +63,7 @@ While in the process of being accepted in [[https://elpa.gnu.org/][elpa.gnu.org]
 
 ** Special thanks to
 
-- The code of commands `fill-paragraph', `c-fill-paragraph' and `refill-mode', and their respective developers.
+- The code of commands ~fill-paragraph~, ~c-fill-paragraph~ and ~refill-mode~, and their respective developers.
 - [[https://github.com/jcs090218][Jen-Chieh Shen]]'s [[https://github.com/elisp-lsp/ellsp][ellsp]] and his patience 🙏
 - [[http://xahlee.info/emacs/][Xah Lee]] invaluable pages on Emacs. I don't think I can pay the full tutorial right now though 😅. But a $20 donation soon for sure 👍.
 - [[https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html][gnu.org]]'s wonderful manuals on Emacs.
