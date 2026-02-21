@@ -56,8 +56,8 @@
 ;; Version 1.1.0
 
 ;; - Customizable variable `php-fill-refill-black-list' added, so that
-;;   if the user finds a command that conflicts with
-;;   `php-fill-refill-mode' that command can be added by the user.
+;;   if a command that conflicts with `php-fill-refill-mode' is found,
+;;   that command can be added by the user.
 
 ;;; Code:
 
