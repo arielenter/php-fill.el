@@ -76,8 +76,8 @@ on C or C++ style comments or both.  See command
 Optional argument ONLY-ONE-LINE-UP will be passed down to
 `php-fill-string-literal'."
   (interactive)
-  (let ((php-fill-literal (php-fill-get-literal)) literal-limits)
-    (setq literal-limits (car php-fill-literal))
+  (let* ((php-fill-literal (php-fill-get-literal))
+	 (literal-limits (car php-fill-literal)))
     (if (or (not literal-limits) (equal literal-limits 'string))
 	(php-fill-string-literal only-one-line-up)
       (call-interactively 'php-fill-c-fill-paragraph))))
@@ -297,8 +297,8 @@ include, but are not limited to the lines length and possible
 concatenation with other supported string literals."
   (save-restriction
     (widen)
-    (let ((literal (php-fill-get-literal)) literal-type literal-limits)
-      (setq literal-type (car literal) literal-limits (cdr literal))
+    (let* ((literal (php-fill-get-literal)) (literal-type (car literal))
+	   (literal-limits (cdr literal)))
       (and (not (memq literal-type '(c c++ pound)))
 	   (or (not literal-type)
 	       ;; At this point, ‘literal-type’ value would have to be
@@ -715,8 +715,8 @@ into two paragraphs separated by and empty line."
   (interactive)
   (save-restriction
     (widen)
-    (let ((literal (php-fill-get-literal)) literal-type literal-limits)
-      (setq literal-type (car literal) literal-limits (cdr literal))
+    (let* ((literal (php-fill-get-literal)) (literal-type (car literal))
+	   (literal-limits (cdr literal)))
       (cond
        ((and (equal literal-type 'string)
 	     (php-fill-lit-limits-are-in-the-same-line literal-limits)
