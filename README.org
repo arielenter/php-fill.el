@@ -28,7 +28,7 @@ We recommend using this package with a major mode for PHP, like the ones supply 
 
 The following example uses ‘php-mode’, but if a different major mode were to be used, just change ‘php-mode’ with something else like ‘phps-mode’ instead.
 
-While in the process of being accepted in either [[https://elpa.gnu.org/][elpa.gnu.org]] or [[https://elpa.nongnu.org/][elpa.nongnu.org]], please download ‘php-fill.el’ and add it by using its holding location, shown here as "~/.emacs.d/lisp/" as an example.
+While in the process of being accepted in [[https://elpa.gnu.org/][elpa.gnu.org]] (see the following archive [[https://lists.gnu.org/archive/html/emacs-devel/2026-02/msg00710.html][Here]]), please download ‘php-fill.el’ and add it by using its holding location, shown here as "~/.emacs.d/lisp/" as an example.
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
